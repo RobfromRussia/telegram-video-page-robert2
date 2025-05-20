@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Смотреть видео | Только для подписчиков</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background: white;
+      max-width: 400px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .title {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .instructions {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .loading {
+      display: none;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">🎥 Видео только для подписчиков канала</div>
+    <div class="instructions">
+      1. Подпишитесь на канал @bobscience<br>
+      2. Нажмите кнопку ниже, чтобы подтвердить
+    </div>
+
+    <!-- Telegram Login Widget -->
+    <script async src="https://telegram.org/js/telegram-widget.js?7"
+            data-telegram-login="bobscience_bot"
+            data-size="large"
+            data-userpic="false"
+            data-request-access="write"
+            data-userpic="false"
+            data-on-auth="onTelegramAuth"
+            data-lang="ru">
+    </script>
+
+    <div class="loading" id="loading">⏳ Проверка подписки...</div>
+  </div>
+
+  <script>
+    function onTelegramAuth(user) {
+      document.getElementById("loading").style.display = "block";
+
+      fetch("https://your-domain.com/check-subscription", { // ← Замени на адрес своего сервера
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ user_id: user.id })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("loading").style.display = "none";
+        if (data.subscribed) {
+          alert("✅ Подписка подтверждена! Переходим к видео...");
+          window.location.href = "https://example.com/your-video.mp4"; // ← Сюда вставь ссылку на видео
+        } else {
+          alert("❌ Вы не подписаны на канал. Пожалуйста, подпишитесь и попробуйте снова.");
+        }
+      })
+      .catch(err => {
+        document.getElementById("loading").style.display = "none";
+        alert("⚠️ Произошла ошибка. Попробуйте позже.");
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
