@@ -49,7 +49,6 @@
             data-size="large"
             data-userpic="false"
             data-request-access="write"
-            data-userpic="false"
             data-on-auth="onTelegramAuth"
             data-lang="ru">
     </script>
@@ -57,11 +56,11 @@
     <div class="loading" id="loading">⏳ Проверка подписки...</div>
   </div>
 
-  <script>
+  <script type="text/javascript">
     function onTelegramAuth(user) {
       document.getElementById("loading").style.display = "block";
 
-      fetch("https://telegram-check-api-robert.onrender.com/check-subscription", { // ← Замени на адрес своего сервера
+      fetch("https://telegram-check-api-robert.onrender.com/check-subscription", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -72,15 +71,15 @@
       .then(data => {
         document.getElementById("loading").style.display = "none";
         if (data.subscribed) {
-          alert("✅ Подписка подтверждена! Переходим к видео...");
-          window.location.href = "https://example.com/your-video.mp4"; // ← Сюда вставь ссылку на видео
+          alert("✅ Подписка подтверждена! Переход к видео...");
+          window.location.href = "https://example.com/your-video.mp4"; // ← Замени на своё видео
         } else {
-          alert("❌ Вы не подписаны на канал. Пожалуйста, подпишитесь и попробуйте снова.");
+          alert("❌ Вы не подписаны на канал. Подпишитесь и попробуйте снова.");
         }
       })
       .catch(err => {
         document.getElementById("loading").style.display = "none";
-        alert("⚠️ Произошла ошибка. Попробуйте позже.");
+        alert("⚠️ Ошибка. Попробуйте позже.");
         console.error(err);
       });
     }
