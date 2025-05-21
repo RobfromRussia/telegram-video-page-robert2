@@ -60,7 +60,7 @@
     function onTelegramAuth(user) {
       document.getElementById("loading").style.display = "block";
 
-      fetch("https://telegram-check-api-robert.onrender.com/check-subscription", {
+      fetch("https://telegram-check-api-robert.onrender.com/check-subscription", { // ← Замени на адрес своего сервера
         method: "POST",
         headers: {
           "Content-Type": "application/json"
